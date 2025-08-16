@@ -1,0 +1,24 @@
+{
+  ".json": {
+    "types": [
+      {
+        "type": "generic",
+        "checks": {
+          "structure": true
+        }
+      },
+      {
+        "type": "swagger",
+        "checks": {
+          "info.description": "^https:\/\/(?:[-\\w]+\\.)*example.com(?:\/[-\\w%.~:/?#[\\]@!$&'()*+,;=]*)?$",
+          "info.title": "^ABC-[0-9]+$"
+        },
+        "compliance": {
+          "versionGe": "3.0.0",
+          "uniqueEndpointCheck": true
+        }
+      }
+    ]
+  }
+}
+
