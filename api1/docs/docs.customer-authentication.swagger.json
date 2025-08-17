@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Customer Authentication API",
+    "title": "Customer Authentication API!",
     "description": "Authenticate customers and manage user sessions.",
     "version": "1.0.0"
   },
