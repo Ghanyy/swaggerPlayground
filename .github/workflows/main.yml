@@ -1,0 +1,45 @@
+name: PR Validation
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.json'
+    types: [opened, reopened]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Download PR Checker
+      run: |
+        curl -L -o pr-checker -OJ https://repo.ghany.fyi/api/packages/OpenCorp/generic/pr-checker-linux-amd64/0.0.2/pr-checker-linux-amd64
+        chmod +x pr-checker
+
+    - name: Run Validation
+      run: |
+        ./pr-checker -r $GITHUB_WORKSPACE -c $GITHUB_WORKSPACE/checker_config.json \
+          -b ${{ github.event.pull_request.base.sha }} \
+          -h ${{ github.event.pull_request.head.sha }} \
+          -v -t 50s
+      continue-on-error: true
+      id: validation
+
+    - name: Comment PR on Failure
+      if: steps.validation.outcome == 'failure'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ PR validation failed. Please check the logs and fix the issues.'
+          })
+
+    - name: Fail if validation failed
+      if: steps.validation.outcome == 'failure'
+      run: exit 1
