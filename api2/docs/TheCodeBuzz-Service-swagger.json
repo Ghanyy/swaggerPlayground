@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "TheCodeBuzz-Service",
+    "title": "ABC-2",
     "version": "v1"
   },
   "paths": {
