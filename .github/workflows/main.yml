@@ -48,17 +48,18 @@ jobs:
           } catch (error) {
             fileContent = `Error reading file: ${error.message}`;
           }
+          let body = '### Validation Results\n\n';
+          body += '```text\n';
+          body += fileContent;
+          body += '\n```\n\n';
+          body += 'Check the workflow for more details.';
           const issue_number = context.payload.pull_request.number;
           const stderr = process.env.stderr;
           await github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: issue_number,
-            body: `### Validation Results
-                  \`\`\`
-                  ${fileContent}
-                  \`\`\`
-                  `
+            body: body
           });
 
     - name: Fail if validation failed
