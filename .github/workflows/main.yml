@@ -29,10 +29,6 @@ jobs:
       continue-on-error: true
       id: validation
 
-    - name: Read stderr
-      id: read_stderr
-      run: echo "stderr=$(cat ./error.log)" >> $GITHUB_ENV
-
     - name: Comment PR on Failure
       if: steps.validation.outcome == 'failure'
       uses: actions/github-script@v7
@@ -45,7 +41,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: issue_number,
-            body: `### stderr Output\n\`\`\`\n${stderr}\n\`\`\``
+            body: `### Validation failed, check logs! ###`
           });
 
     - name: Fail if validation failed
