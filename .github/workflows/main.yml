@@ -6,6 +6,9 @@ on:
       - '**.json'
     types: [opened, reopened]
 
+permissions:
+  pull-requests: write
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -35,13 +38,27 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
+          const fs = require('fs');
+          const path = require('path');
+          // Read file content
+          const filePath = './error.log';
+          let fileContent = '';
+          try {
+            fileContent = fs.readFileSync(filePath, 'utf8');
+          } catch (error) {
+            fileContent = `Error reading file: ${error.message}`;
+          }
           const issue_number = context.payload.pull_request.number;
           const stderr = process.env.stderr;
           await github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: issue_number,
-            body: `### Validation failed, check logs! ###`
+            body: `### Validation Results
+                  \`\`\`
+                  ${fileContent}
+                  \`\`\`
+                  `
           });
 
     - name: Fail if validation failed
