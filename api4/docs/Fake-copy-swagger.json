@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "ABC-2",
-    "description": "https://ogorki.example.com/ticket/ABC-223",
+    "title": "ABC-33",
+    "description": "https://ogorki.example.com/ticket/ABC-224",
     "version": "v1"
   },
   "paths": {
