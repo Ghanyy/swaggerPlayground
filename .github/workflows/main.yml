@@ -19,7 +19,7 @@ jobs:
 
     - name: Download PR Checker
       run: |
-        curl -L -o pr-checker -OJ https://repo.ghany.fyi/api/packages/OpenCorp/generic/pr-checker-linux-amd64/0.0.5/pr-checker-linux-amd64
+        curl -L -o pr-checker -OJ https://repo.ghany.fyi/api/packages/OpenCorp/generic/pr-checker-linux-amd64/0.0.6/pr-checker-linux-amd64
         curl -L -o checker_config.json -OJ https://repo.ghany.fyi/OpenCorp/PRchecker/raw/branch/main/checker_config.json
         chmod +x pr-checker
 
